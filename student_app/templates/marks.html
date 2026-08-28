@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>
+        Student Marks
+    </h1>
+    <p>Student: {{ student.name }}</p>
+
+    <p>Mark: {{ student.mark }}%</p>
+
+    {% if student.mark >= 50 %}
+    <p>Result: Pass</P>
+
+    {% else %}
+    <p>Result: Fail</p>
+
+    {% endif %} {% if student.class_group %}
+    <p>Class Group: {{ student.class_group.name }}</p>
+
+    {% else %}
+    <p>Class Group: No class group assigned</p>
+
+    {% endif %}
+    <h2>
+        Subjects
+    </h2>
+    {% for subject in student.subjects.all %}
+    {{ subject.name }}
+    {% empty %}
+    No subjects assigned
+    {% endfor %}
+</body>
+</html>
