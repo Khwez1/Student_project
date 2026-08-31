@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class ClassGroup(models.Model):
     name = models.CharField(max_length=100)
@@ -17,6 +18,9 @@ class Subject(models.Model):
 class Student(models.Model):
     name = models.CharField(max_length=100)
     mark = models.IntegerField()
+    created_by = models.ForeignKey(
+        User, on_delete=models.CASCADE, null=True, blank=True
+    )
 
     class_group = models.ForeignKey(
         ClassGroup,

@@ -66,6 +66,7 @@ import requests
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.throttling import ScopedRateThrottle
 from rest_framework import status
 from .models import Student
 
@@ -74,9 +75,11 @@ from .serializer import StudentSerializer
 class StudentViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
-    permission_classes = [IsAuthenticated,]
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = None
+    # permission_classes = [IsAuthenticated,]
 
-    @action(detail=False, methods=['post'])
+    @action(detail=False, methods=['post'], throttle_scope='sync')
     def sync_external(self, request):
         response = requests.get('https://jsonplaceholder.typicode.com/users')
         external_users = response.json()
