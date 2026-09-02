@@ -68,6 +68,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.throttling import ScopedRateThrottle
 from rest_framework import status
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter, OrderingFilter
 from .models import Student
 
 from .serializer import StudentSerializer
@@ -76,6 +78,8 @@ class StudentViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
     throttle_classes = [ScopedRateThrottle]
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_fields = ['mark', 'class_group']
     throttle_scope = None
     # permission_classes = [IsAuthenticated,]
 

@@ -23,7 +23,7 @@ class StudentSerializer(serializers.ModelSerializer):
             )
         return data
 
-    def validate_copies(self, value):
+    def validate_name(self, value):
         if Student.objects.filter(value).exists():
             raise serializers.ValidationError("This name is already taken.")
         return value
