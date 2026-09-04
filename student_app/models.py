@@ -36,7 +36,7 @@ class Student(models.Model):
         blank=True
     )
 
-    is_top_performer = models.BooleanField(default=False)
+    is_top_performer = models.BooleanField(default=False, null=True)
 
     def __str__(self):
         return self.name
