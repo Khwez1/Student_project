@@ -72,6 +72,9 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from .models import Student
 
 from .serializer import StudentSerializer
+import logging
+
+logger = logging.getLogger(__name__)
 
 class StudentViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.all()
