@@ -70,7 +70,7 @@ from rest_framework import status
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 from .models import Student
-
+from drf_spectacular.utils import extend_schema
 from .serializer import StudentSerializer
 import logging
 
@@ -84,6 +84,10 @@ class StudentViewSet(viewsets.ModelViewSet):
     filterset_fields = ['mark', 'class_group']
     throttle_scope = None
     # permission_classes = [IsAuthenticated,]
+
+    @extend_schema(
+        request=StudentSerializer,  methods=["POST","GET"], responses={201: StudentSerializer}
+    )
 
     @action(detail=False, methods=['post'], throttle_scope='sync')
     def sync_external(self, request):
