@@ -71,7 +71,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 from .models import Student
 from drf_spectacular.utils import extend_schema
-from .serializer import StudentSerializer
+from .serializer import StudentSerializer, SyncExternalResponseSerializer
 import logging
 
 logger = logging.getLogger(__name__)
@@ -86,9 +86,9 @@ class StudentViewSet(viewsets.ModelViewSet):
     # permission_classes = [IsAuthenticated,]
 
     @extend_schema(
-        request=StudentSerializer,  methods=["POST","GET"], responses={201: StudentSerializer}
+        summary="Synchronize external students",
+        responses={201: SyncExternalResponseSerializer}
     )
-
     @action(detail=False, methods=['post'], throttle_scope='sync')
     def sync_external(self, request):
         response = requests.get('https://jsonplaceholder.typicode.com/users')

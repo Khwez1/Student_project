@@ -6,7 +6,7 @@ class StudentSerializer(serializers.ModelSerializer):
         model = Student
         fields = '__all__'
 
-    def validat_mark(self, value):
+    def validate_mark(self, value):
         if value < 0 or value > 100:
             raise serializers.ValidationError(
                 "Mark must be between 0 and 100."
@@ -24,6 +24,11 @@ class StudentSerializer(serializers.ModelSerializer):
         return data
 
     def validate_name(self, value):
-        if Student.objects.filter(value).exists():
+        if Student.objects.filter(name=value).exists():
             raise serializers.ValidationError("This name is already taken.")
         return value
+
+class SyncExternalResponseSerializer(serializers.Serializer):
+    created_count = serializers.IntegerField()
+    students = StudentSerializer(many=True)
+    errors = serializers.ListField()
