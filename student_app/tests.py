@@ -47,10 +47,10 @@ class StudentAPITests(APITestCase):
         )
 
     def test_DOC_003_update_student_with_credentials_returns_204(self):
-        self.client.force_authenticate(user=self.owner)
+        self.client.force_authenticate(user=self.other_user)
 
         response = self.client.patch(
-            f'/students/{self.student.id}',
+            f'/students/{self.student.id}/',
             data={
                 'mark': 89
             }

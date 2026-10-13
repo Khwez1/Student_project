@@ -83,7 +83,8 @@ class StudentViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields = ['mark', 'class_group']
     throttle_scope = None
-    # permission_classes = [IsAuthenticated,]
+    permission_classes = [IsAuthenticated,]
+    # ordering_fields = ['name']
 
     @extend_schema(
         summary="Synchronize external students",
